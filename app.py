@@ -28,20 +28,36 @@ def construct_index(directory_path):
 
     return index
 
-def ask_me_anything(question):
+def ask_me_anything(question, api_key):
+    if not os.path.isfile('index.json'):
+        st.markdown('Por favor, construa um índice primeiro.')
+        return
+
     index = GPTSimpleVectorIndex.load_from_disk('index.json')
-    response = index.query(question, response_mode="compact")
+    llm = OpenAI(api_key=api_key, temperature=0, model_name="gpt-3.5-turbo", max_tokens=256)
+    response = index.query(question, response_mode="compact", llm=llm)
 
     st.markdown(f"**ChatGPCela**: {response.response}")
 
 def main():
     st.title('ChatGPCela')
     question = st.text_input('O que você gostaria de saber?')
+    
+    # Add toggle for API key
+    use_user_api_key = st.checkbox('Usar sua chave de API do OpenAI')
+    if use_user_api_key:
+        api_key = st.text_input('Digite sua chave de API do OpenAI')
+    else:
+        api_key = st.secrets.openai_key
+
+    # Add button to construct index
+    if st.button('Construir Índice'):
+        directory_path = 'textdata'
+        construct_index(directory_path)
+        st.markdown('Índice construído com sucesso!')
+
     if st.button('Perguntar'):
-        ask_me_anything(question)
+        ask_me_anything(question, api_key)
 
 if __name__ == "__main__":
-    openai_key = st.secrets.openai_key
-    os.environ["OPENAI_API_KEY"] = openai_key
-    #construct_index('textdata')
     main()
