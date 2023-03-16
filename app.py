@@ -45,13 +45,14 @@ def main():
     
     # Sidebar for index building button and API key toggle
     with st.sidebar:
-        st.subheader("Configurações")
+        st.subheader("Key")
         use_user_api_key = st.checkbox('Usar sua chave de API do OpenAI')
         if use_user_api_key:
             api_key = st.text_input('Digite sua chave de API do OpenAI')
         else:
             api_key = st.secrets.openai_key
 
+        st.subheader("Índice")
         if st.button('Construir Índice'):
             directory_path = 'textdata'
             construct_index(directory_path, api_key)
