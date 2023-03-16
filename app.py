@@ -45,7 +45,7 @@ def main():
         ask_me_anything(question)
 
 if __name__ == "__main__":
-    openai_key = open('openai_key.txt', 'r').read()
+    openai_key = st.secrets.openai_key
     os.environ["OPENAI_API_KEY"] = openai_key
     construct_index('textdata')
     main()
