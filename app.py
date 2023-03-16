@@ -32,8 +32,7 @@ def ask_me_anything(question):
     index = GPTSimpleVectorIndex.load_from_disk('index.json')
     response = index.query(question, response_mode="compact")
 
-    st.markdown(f"You asked: **{question}**")
-    st.markdown(f"Bot says: **{response.response}**")
+    st.markdown(f"**ChatGPCela**: {response.response}")
 
 def main():
     st.title('ChatGPCela')
