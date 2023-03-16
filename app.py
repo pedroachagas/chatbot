@@ -4,9 +4,6 @@ from langchain import OpenAI
 import os
 import streamlit as st
 
-# Adapted based on LlamaIndex documentation https://gpt-index.readthedocs.io/en/latest/index.html
-# and Dan Shipper's work https://www.lennysnewsletter.com/p/i-built-a-lenny-chatbot-using-gpt
-
 def construct_index(directory_path):
     # set maximum input size
     max_input_size = 4096
@@ -39,13 +36,13 @@ def ask_me_anything(question):
     st.markdown(f"Bot says: **{response.response}**")
 
 def main():
-    st.title('Ask Me Anything')
-    question = st.text_input('What would you like to ask?')
-    if st.button('Ask'):
+    st.title('ChatGPCela')
+    question = st.text_input('O que você gostaria de saber?')
+    if st.button('Perguntar'):
         ask_me_anything(question)
 
 if __name__ == "__main__":
     openai_key = st.secrets.openai_key
     os.environ["OPENAI_API_KEY"] = openai_key
-    construct_index('textdata')
+    #construct_index('textdata')
     main()
