@@ -51,6 +51,8 @@ def main():
             api_key = st.text_input('Digite sua chave de API do OpenAI')
         else:
             api_key = st.secrets.openai_key
+        
+        os.environ["OPENAI_API_KEY"] = api_key
 
         st.subheader("Índice")
         if st.button('Construir Índice'):
