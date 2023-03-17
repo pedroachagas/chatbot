@@ -35,7 +35,8 @@ def ask_me_anything(question, api_key):
 
     index = GPTSimpleVectorIndex.load_from_disk('index.json')
     llm = OpenAI(api_key=api_key, temperature=0, model_name="gpt-3.5-turbo", max_tokens=256)
-    response = index.query(question, response_mode="compact", llm=llm)
+    response = index.query(question, response_mode="compact")
+    index.query()
 
     st.markdown(f"**ChatGPCela**: {response.response}")
 
@@ -45,14 +46,13 @@ def main():
     
     # Sidebar for index building button and API key toggle
     with st.sidebar:
-        st.subheader("Key")
+        st.subheader("Configurações")
         use_user_api_key = st.checkbox('Usar sua chave de API do OpenAI')
         if use_user_api_key:
             api_key = st.text_input('Digite sua chave de API do OpenAI')
         else:
             api_key = st.secrets.openai_key
 
-        st.subheader("Índice")
         if st.button('Construir Índice'):
             directory_path = 'textdata'
             construct_index(directory_path, api_key)
